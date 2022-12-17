@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ConsumoApiCorreios</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <link rel="stylesheet" href="style.css">
+
+    </head>
+    <body>
+        <header class="center">
+            <h1>CONSULTA DE CEP</h1>
+            <p id="resumo">O sistema de endereçamento postal ou Código de Endereçamento Postal (CEP) no Brasil foi criado com objetivo de organizar, 
+                agilizar e facilitar a postagem, localização e distribuição das correspondências de forma lógica. O sistema foi criado pela Empresa Brasileira 
+                de Correios e Telégrafos em maio de 1971, sendo divulgado à população em geral com a publicação do Guia Postal Brasileiro no mesmo ano. 
+                Até maio de 1992, os Códigos de Endereçamento Postal - conhecidos pela sigla CEP - de todo o Brasil tinham o formato 00000 (cinco dígitos).
+                Com o aumento da população, do volume de correspondências e da necessidade de criar mais códigos específicos para grandes receptores de 
+                correspondência, o sistema de CEP com cinco dígitos tornou-se insuficiente nas grandes cidades. Com isto, os Correios alteraram 
+                o formato dos códigos postais de todo o Brasil, que passaram a ter oito dígitos: 00000-000 (cinco dígitos - hífen - três dígitos), 
+                tendo essa mudança sido informada à população no mesmo ano, com a publicação do Guia Postal Brasileiro de 1992.<br>
+                <span>Fonte: wikipedia</span>
+            </p>
+            <p>Digite o CEP (apenas números) que você deseja buscar:</p>
+            <div class="container">
+                <div class="search">
+                    <input type="text" id="cep" name="cep" placeholder="Digite o CEP:" maxlength="9"/>
+                    <button onclick="consumoApi()">Buscar CEP</button>
+                </div>
+            </div>      
+        </header>
+        <table id="tabela" class="table table-success table-striped">
+            <thead>
+                <tr>
+                    <th>CEP</th>
+                    <th>Endereço</th>
+                    <th>Cidade</th>
+                    <th>Estado</th>
+                    <th>Bairro</th>
+                    <th>Ação</th>
+                </tr>          
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+        
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    </body>
+    <script src="script.js"></script>
+
+</html>
