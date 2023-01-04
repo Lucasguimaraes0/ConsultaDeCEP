@@ -1,5 +1,29 @@
-function adicionaElementoHTML(enderecoJSON){ 
-    let linha = document.createElement("tr");
+function buscarCEP(){
+    let cep = document.getElementById('cep').value;
+    let validacao = /^[0-9]+$/;
+    if(validacao.test(cep) && cep.length === 8){
+        consultarCEP(cep);
+    } else {
+        alert('Formato de CEP inválido! Insira apenas 8 números!');
+    }
+}
+
+async function consultarCEP(cep){
+    let url = `https://viacep.com.br/ws/${cep}/json/`;
+    const response = await fetch(url);
+    let endereco = await response.json();
+
+    if (endereco.hasOwnProperty('erro')){
+        alert('CEP não encontrado. Insira outro CEP.')
+    } else {
+        adicionarElementoHTML(endereco);
+    }
+
+}
+
+function adicionarElementoHTML(endereco){
+    let tabela = document.getElementById("tbody");    
+    let row = document.createElement("tr");
     let tdCep = document.createElement("td");
     let tdRua = document.createElement("td");
     let tdCidade = document.createElement("td");
@@ -7,42 +31,23 @@ function adicionaElementoHTML(enderecoJSON){
     let tdBairro = document.createElement("td");
     let tdAcao = document.createElement("td");
     
-    tdCep.innerHTML = enderecoJSON.cep;
-    tdRua.innerHTML = enderecoJSON.logradouro;
-    tdCidade.innerHTML = enderecoJSON.localidade;
-    tdEstado.innerHTML = enderecoJSON.uf;
-    tdBairro.innerHTML = enderecoJSON.bairro;
+    tdCep.innerHTML = endereco.cep;
+    tdRua.innerHTML = endereco.logradouro;
+    tdCidade.innerHTML = endereco.localidade;
+    tdEstado.innerHTML = endereco.uf;
+    tdBairro.innerHTML = endereco.bairro;
     tdAcao.innerHTML = "<span class=\"apagar\"><ion-icon name=\"trash-outline\"></ion-icon></span>";
   
-    linha.appendChild(tdCep);
-    linha.appendChild(tdRua);
-    linha.appendChild(tdCidade);
-    linha.appendChild(tdEstado);
-    linha.appendChild(tdBairro);
-    linha.appendChild(tdAcao);
+    row.appendChild(tdCep);
+    row.appendChild(tdRua);
+    row.appendChild(tdCidade);
+    row.appendChild(tdEstado);
+    row.appendChild(tdBairro);
+    row.appendChild(tdAcao);
 
-    return linha;
-}
+    tabela.appendChild(row);
 
-async function consumoApi(){
-    let cep = document.getElementById('cep').value;
-    let validacao = /^[0-9]+$/; //expressão regular para percorrer do início ao fim buscando números
-    if (validacao.test(cep)){ //verifica se o formato do cep contém caracteres inválidos
-        let url = `https://viacep.com.br/ws/${cep}/json/`;
-        let endereco = await fetch(url);
-        let enderecoJSON = await endereco.json();
-        console.log(enderecoJSON);
-        
-        if (enderecoJSON.hasOwnProperty('erro')){ //cep não existe
-            alert ('CEP não encontrado. Insira outro CEP.')
-        } else {
-        let linha = await adicionaElementoHTML(enderecoJSON);
-        let tabela = document.getElementById("tbody");    
-        tabela.appendChild(linha);
-        }
-    } else {
-        alert ("Formato de CEP inválido! Insira apenas 8 números!")
-    }   
+    return row;
 }
 
 var apagaLinha = document.getElementById("tabela");
@@ -55,5 +60,3 @@ apagaLinha.addEventListener("click", function(event){
         trElemento.parentElement.remove();
     }
 });
-
-
